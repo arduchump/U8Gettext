@@ -15,9 +15,23 @@ sLanguageInstance = NULL;
 
 const char *U8GettextSetLanguage(const char *language)
 {
-  const char * oldLanguage = sU8GettextLanguage;
+  uint16_t i = 0;
+  const char * oldLanguage = "";
+  const U8GettextLanguage * languageInstance = NULL;
 
-  sU8GettextLanguage = language;
+  if (sLanguageInstance) {
+    oldLanguage = sLanguageInstance->language;
+  }
+
+  languageInstance = gU8GettextLanguages;
+  for(i = 0; i < gU8GettextLanguagesLength; ++i, ++languageInstance) {
+    // Set the language instance by specific language
+    if(0 == strcmp(language, languageInstance->language)) {
+      sLanguageInstance = languageInstance;
+      break;
+    }
+  }
+
   return oldLanguage;
 }
 
