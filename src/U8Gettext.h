@@ -13,14 +13,14 @@ struct U8GettextCharMapping
 struct U8GettextTranslation
 {
   const char * msgId;
-  const char * msgStr
+  const char * msgStr;
 };
 
 struct U8GettextLanguage
 {
   const char * language;
   const U8GettextTranslation * translations;
-  const size_t translationCount;
+  const size_t * translationCount;
 };
 
 /**

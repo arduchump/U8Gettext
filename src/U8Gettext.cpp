@@ -57,7 +57,7 @@ const char *U8Gettext(const char *str)
   }
 
   translation = sLanguageInstance->translations;
-  for(i = 0; i < sLanguageInstance->translationCount; ++i, ++translation) {
+  for(i = 0; i < *sLanguageInstance->translationCount; ++i, ++translation) {
     // Slowest way to find translation
     if(0 == strcmp(str, translation->msgId)) {
       return translation->msgStr;
