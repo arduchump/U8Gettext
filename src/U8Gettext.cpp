@@ -89,13 +89,15 @@ static char utf8ToU8GlibFontEncoding(const char *str)
 {
   size_t i;
   uint32_t utf32Char;
+  U8GettextCharMapping charMapping;
 
   utf32Char = utf8ToUtf32(str);
 
   // Slowest way to translate string to U8Glib font encoding
   for(i = 0; i < *sContext->charMappingCount; ++ i) {
-    if (sContext->charMappings[i].utf32Char == utf32Char) {
-      return sContext->charMappings[i].u8gChar;
+    memcpy_P(&charMapping, sContext->charMappings + i, sizeof(charMapping));
+    if (charMapping.utf32Char == utf32Char) {
+      return charMapping.u8gChar;
     }
   }
 

@@ -35,6 +35,7 @@ struct U8GettextContext
   const size_t *languageCount;
   const u8g_fntpgm_uint8_t *font;
   const size_t *fontEncodingCount;
+  /* This data be stored in Flash, so do not use normal way access it ! */
   const U8GettextCharMapping *charMappings;
   const size_t *charMappingCount;
 };
