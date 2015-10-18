@@ -10,9 +10,6 @@
 extern const size_t gU8GettextLanguagesLength;
 extern const U8GettextLanguage gU8GettextLanguages[];
 
-static const char *
-sU8GettextLanguage = "en_US";
-
 static const U8GettextLanguage *
 sLanguageInstance = NULL;
 
@@ -26,7 +23,14 @@ const char *U8GettextSetLanguage(const char *language)
 
 const char *U8GettextGetLanguage()
 {
-  return sU8GettextLanguage;
+  if (sLanguageInstance) {
+    return sLanguageInstance->language;
+  }
+
+  // If you have not set any langauge, it return empty string. So that
+  // it won't cause program crash if any other function invoke this
+  // function without set language.
+  return "";
 }
 
 const char *U8Gettext(const char *str)

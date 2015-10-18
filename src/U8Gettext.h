@@ -32,6 +32,13 @@ struct U8GettextLanguage
  * @return Old language string
  */
 const char *U8GettextSetLanguage(const char *language);
+
+/**
+ * Get current language
+ *
+ * @return Return current language or return empty string if you have
+ * not set language before.
+ */
 const char *U8GettextGetLanguage();
 const char *U8Gettext(const char *str);
 
