@@ -20,7 +20,7 @@ struct U8GettextLanguage
 {
   const char * language;
   const U8GettextTranslation * translations;
-  const size_t translationsLength;
+  const size_t translationCount;
 };
 
 /**
