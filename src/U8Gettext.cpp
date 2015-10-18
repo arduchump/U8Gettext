@@ -38,6 +38,9 @@ const char *u8gettextSetLanguage(const char *language)
   }
 
   languageInstance = sContext->languages;
+  // If we can't find any language matched user provided language,
+  // we will reset the langugae instance to NULL.
+  sLanguageInstance = NULL;
   for(i = 0; i < *sContext->languageCount; ++i, ++languageInstance) {
     // Set the language instance by specific language
     if(0 == strcmp(language, languageInstance->language)) {
