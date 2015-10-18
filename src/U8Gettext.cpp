@@ -31,8 +31,21 @@ const char *U8GettextGetLanguage()
 
 const char *U8Gettext(const char *str)
 {
-  // TODO Implementation
+  uint16_t i = 0;
+  const U8GettextTranslation *translation = NULL;
+
   if (!sLanguageInstance) {
     return str;
   }
+
+  translation = sLanguageInstance->translations;
+  for(i = 0; i < sLanguageInstance->translationCount; ++i, ++translation) {
+    // Slowest way to find translation
+    if(0 == strcmp(str, translation->msgId)) {
+      return translation->msgStr;
+    }
+  }
+
+  // Can't find any translations!
+  return str;
 }
