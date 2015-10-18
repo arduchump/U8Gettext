@@ -30,6 +30,11 @@ const char *U8GettextSetLanguage(const char *language)
     oldLanguage = sLanguageInstance->language;
   }
 
+  if (!sLanguages) {
+    // If we have not initialized the gettext ...
+    return oldLanguage;
+  }
+
   languageInstance = sLanguages;
   for(i = 0; i < sLanguagesLength; ++i, ++languageInstance) {
     // Set the language instance by specific language
