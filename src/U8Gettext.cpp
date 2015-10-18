@@ -13,6 +13,9 @@ extern const U8GettextLanguage gU8GettextLanguages[];
 static const char *
 sU8GettextLanguage = "en_US";
 
+static const U8GettextLanguage *
+sLanguageInstance = NULL;
+
 const char *U8GettextSetLanguage(const char *language)
 {
   const char * oldLanguage = sU8GettextLanguage;
@@ -29,4 +32,7 @@ const char *U8GettextGetLanguage()
 const char *U8Gettext(const char *str)
 {
   // TODO Implementation
+  if (!sLanguageInstance) {
+    return str;
+  }
 }
