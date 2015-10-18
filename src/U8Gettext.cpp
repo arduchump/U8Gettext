@@ -14,15 +14,15 @@ sLanguageInstance = NULL;
 static const U8GettextContext *
 sContext = NULL;
 
-void _U8GettextInitialize(
+void _u8gettextInitialize(
     const U8GettextContext * context,
     const char *language)
 {
   sContext = context;
-  U8GettextSetLanguage(language);
+  u8gettextSetLanguage(language);
 }
 
-const char *U8GettextSetLanguage(const char *language)
+const char *u8gettextSetLanguage(const char *language)
 {
   uint16_t i = 0;
   const char * oldLanguage = "";
@@ -49,7 +49,7 @@ const char *U8GettextSetLanguage(const char *language)
   return oldLanguage;
 }
 
-const char *U8GettextGetLanguage()
+const char *u8gettextGetLanguage()
 {
   if (sLanguageInstance) {
     return sLanguageInstance->language;
@@ -61,7 +61,7 @@ const char *U8GettextGetLanguage()
   return "";
 }
 
-const char *U8Gettext(const char *str)
+const char *u8gettext(const char *str)
 {
   uint16_t i = 0;
   const U8GettextTranslation *translation = NULL;
@@ -99,10 +99,10 @@ static char utf8ToU8GlibFontEncoding(const char *str)
   return '\0';
 }
 
-const char *U8GettextU(const char *str)
+const char *u8gettextU(const char *str)
 {
   static char sBuffer[1024] = {0, };
-  const char * translatedStr = U8Gettext(str);
+  const char * translatedStr = u8gettext(str);
   char * position = sBuffer;
   const U8GettextTranslation *translation = NULL;
 

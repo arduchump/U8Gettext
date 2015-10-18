@@ -36,10 +36,10 @@ struct U8GettextContext
 
 extern const U8GettextContext __gU8GettextContext;
 
-void _U8GettextInitialize(
+void _u8gettextInitialize(
     const U8GettextContext * context,
     const char *language);
-#define U8GettextInitialize(language) _U8GettextInitialize(\
+#define u8gettextInitialize(language) _u8gettextInitialize(\
     &__gU8GettextContext, \
     (language))
 
@@ -52,7 +52,7 @@ void _U8GettextInitialize(
  *
  * @return Old language string
  */
-const char *U8GettextSetLanguage(const char *language);
+const char *u8gettextSetLanguage(const char *language);
 
 /**
  * Get current language
@@ -60,8 +60,8 @@ const char *U8GettextSetLanguage(const char *language);
  * @return Return current language or return empty string if you have
  * not set language before.
  */
-const char *U8GettextGetLanguage();
-const char *U8Gettext(const char *str);
+const char *u8gettextGetLanguage();
+const char *u8gettext(const char *str);
 
 /**
  * Get translated message only for U8Glib display method !
@@ -70,7 +70,7 @@ const char *U8Gettext(const char *str);
  * @return Return string is a temporary pointer with about 1KB buffer!
  * @note Don't use the return pointer cross two U8GettextU()!
  */
-const char *U8GettextU(const char *str);
+const char *u8gettextU(const char *str);
 
 #endif // __U8GETTEXT_H_INCLUDED_4AD09038_006D_A018_36AB_D116C344B856
 
