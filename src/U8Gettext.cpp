@@ -7,11 +7,18 @@
 #define PTR_OFFSET_BYTES(ptr, nBytes) ((void*)(((char *)(ptr)) + (nBytes)))
 #define PTR_OFFSET_BETWEEN(ptrBegin, ptrEnd) ((char*)(ptrEnd) - (char*)(ptrBegin))
 
-extern const size_t gU8GettextLanguagesLength;
-extern const U8GettextLanguage gU8GettextLanguages[];
-
 static const U8GettextLanguage *
 sLanguageInstance = NULL;
+
+static size_t sLanguagesLength = 0;
+static const U8GettextLanguage *sLanguages = NULL;
+
+void _U8GettextInitialize(const U8GettextLanguage * languages, const size_t languageCount, const char *language)
+{
+  sLanguages = languages;
+  sLanguagesLength = languageCount;
+  U8GettextSetLanguage(language);
+}
 
 const char *U8GettextSetLanguage(const char *language)
 {
@@ -23,8 +30,8 @@ const char *U8GettextSetLanguage(const char *language)
     oldLanguage = sLanguageInstance->language;
   }
 
-  languageInstance = gU8GettextLanguages;
-  for(i = 0; i < gU8GettextLanguagesLength; ++i, ++languageInstance) {
+  languageInstance = sLanguages;
+  for(i = 0; i < sLanguagesLength; ++i, ++languageInstance) {
     // Set the language instance by specific language
     if(0 == strcmp(language, languageInstance->language)) {
       sLanguageInstance = languageInstance;
