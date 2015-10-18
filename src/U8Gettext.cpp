@@ -111,7 +111,7 @@ const char *u8gettextU(const char *str)
 
   sBuffer[0] = '\0';
 
-  while(!*str) {
+  while(*str) {
     *position = utf8ToU8GlibFontEncoding(str);
     str = utf8FindNextChar(str);
     ++ position;
