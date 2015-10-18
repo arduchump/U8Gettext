@@ -4,6 +4,15 @@
 #include <U8glib.h>
 #include <U8GettextSimple.h>
 
+void printHexString(const char *str) {
+  while(*str) {
+    Serial.print(" 0x");
+    Serial.print((uint8_t)*str, HEX);
+    ++ str;
+  }
+  Serial.println();
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -35,4 +44,9 @@ void loop() {
   Serial.println(u8gettextGetLanguage());
 
   Serial.println(_("Hello, world!"));
+
+  delay(3000);
+  Serial.println("[Test 3]");
+
+  printHexString(U_("Hello, world!"));
 }
