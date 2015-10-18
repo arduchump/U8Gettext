@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <inttypes.h>
+#include <U8glib.h>
 
 struct U8GettextCharMapping
 {
@@ -23,11 +24,25 @@ struct U8GettextLanguage
   const size_t * translationCount;
 };
 
-extern const size_t __gU8GettextLanguagesLength;
-extern const U8GettextLanguage __gU8GettextLanguages[];
+struct U8GettextContext
+{
+  const U8GettextLanguage *languages;
+  const size_t *languageCount;
+  const u8g_fntpgm_uint8_t *font;
+  const size_t *fontEncodingCount;
+  const U8GettextCharMapping *charMappings;
+  const size_t *charMappingCount;
+};
 
-void _U8GettextInitialize(const U8GettextLanguage * languages, const size_t languageCount, const char *language);
-#define U8GettextInitialize(language) _U8GettextInitialize(__gU8GettextLanguages, __gU8GettextLanguagesLength, (language))
+extern const U8GettextContext __gU8GettextContext;
+
+void _U8GettextInitialize(
+    const U8GettextContext * context,
+    const char *language);
+#define U8GettextInitialize(language) _U8GettextInitialize(\
+    &__gU8GettextContext, \
+    (language))
+
 
 /**
  * Set current U8Gettext language
@@ -47,6 +62,15 @@ const char *U8GettextSetLanguage(const char *language);
  */
 const char *U8GettextGetLanguage();
 const char *U8Gettext(const char *str);
+
+/**
+ * Get translated message only for U8Glib display method !
+ *
+ * @param str
+ * @return Return string is a temporary pointer with about 1KB buffer!
+ * @note Don't use the return pointer cross two U8GettextU()!
+ */
+const char *U8GettextU(const char *str);
 
 #endif // __U8GETTEXT_H_INCLUDED_4AD09038_006D_A018_36AB_D116C344B856
 

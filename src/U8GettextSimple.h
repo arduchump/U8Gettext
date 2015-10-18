@@ -12,5 +12,6 @@
 
 #define _(str) U8Gettext((str))
 #define N_(str) (str)
+#define U_(str) U8GettextU((str))
 
 #endif /* __U8GETTEXTSIMPLE_H_INCLUDED_3DC4756E755911E5AA6EA088B4D1658C */
