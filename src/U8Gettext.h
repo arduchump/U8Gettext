@@ -23,8 +23,8 @@ struct U8GettextLanguage
   const size_t * translationCount;
 };
 
-extern const size_t gU8GettextLanguagesLength;
-extern const U8GettextLanguage gU8GettextLanguages[];
+extern const size_t __gU8GettextLanguagesLength;
+extern const U8GettextLanguage __gU8GettextLanguages[];
 
 void _U8GettextInitialize(const U8GettextLanguage * languages, const size_t languageCount, const char *language);
 #define U8GettextInitialize(language) _U8GettextInit(gU8GettextLanguages, gU8GettextLanguagesLength, (language))
