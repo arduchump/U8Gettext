@@ -5,6 +5,11 @@
 #include <inttypes.h>
 #include <U8glib.h>
 
+#define U8GETTEXT_MAKE_VERSION(major, minor, micro) \
+  ((((major) & 0xFF) << 24) | (((minor) & 0xFF) << 16) | ((micro) & 0xFFFF))
+
+#define U8GETTEXT_VERSION U8GETTEXT_MAKE_VERSION(0, 0, 1)
+
 struct U8GettextCharMapping
 {
   uint32_t utf32Char;
