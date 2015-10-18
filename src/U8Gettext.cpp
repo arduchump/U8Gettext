@@ -82,12 +82,42 @@ const char *U8Gettext(const char *str)
   return str;
 }
 
+static char utf8ToU8GlibFontEncoding(const char *str)
+{
+  size_t i;
+  uint32_t utf32Char;
+
+  utf32Char = utf8ToUtf32(str);
+
+  // Slowest way to translate string to U8Glib font encoding
+  for(i = 0; i < *sContext->charMappingCount; ++ i) {
+    if (sContext->charMappings[i].utf32Char == utf32Char) {
+      return sContext->charMappings[i].u8gChar;
+    }
+  }
+
+  return '\0';
+}
+
 const char *U8GettextU(const char *str)
 {
   static char sBuffer[1024] = {0, };
   const char * translatedStr = U8Gettext(str);
+  char * position = sBuffer;
   const U8GettextTranslation *translation = NULL;
 
-  // TODO: Not yet implemented
-  return str;
+  sBuffer[0] = '\0';
+
+  while(!*str) {
+    *position = utf8ToU8GlibFontEncoding(str);
+    str = utf8FindNextChar(str);
+    ++ position;
+    if(PTR_OFFSET_BETWEEN(sBuffer, position) >= sizeof(sBuffer)) {
+      break;
+    }
+  }
+
+  *position = '\0';
+
+  return sBuffer;
 }
