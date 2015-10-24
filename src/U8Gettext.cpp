@@ -107,11 +107,18 @@ static char utf8ToU8GlibFontEncoding(const char *str)
 const char *u8gettextU(const char *str)
 {
   static char sBuffer[1024] = {0, };
-  const char * translatedStr = u8gettext(str);
-  char * position = sBuffer;
+  const char * translatedStr = NULL;
+  char * position = NULL;
   const U8GettextTranslation *translation = NULL;
 
   sBuffer[0] = '\0';
+
+  if (!sContext) {
+    return sBuffer;
+  }
+
+  translatedStr = u8gettext(str);
+  position = sBuffer;
 
   while(*str) {
     *position = utf8ToU8GlibFontEncoding(str);
