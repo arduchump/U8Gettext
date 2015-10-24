@@ -107,7 +107,7 @@ static char utf8ToU8GlibFontEncoding(const char *str)
 const char *u8gettextU(const char *str)
 {
   static char sBuffer[1024] = {0, };
-  const char * translatedStr = NULL;
+  static const int sBufferSize = sizeof(sBuffer) - 1; // The last character must be '\0'
   char * position = NULL;
   const U8GettextTranslation *translation = NULL;
 
@@ -117,14 +117,14 @@ const char *u8gettextU(const char *str)
     return sBuffer;
   }
 
-  translatedStr = u8gettext(str);
+  str = u8gettext(str);
   position = sBuffer;
 
   while(*str) {
     *position = utf8ToU8GlibFontEncoding(str);
     str = utf8FindNextChar(str);
     ++ position;
-    if(PTR_OFFSET_BETWEEN(sBuffer, position) >= sizeof(sBuffer)) {
+    if(PTR_OFFSET_BETWEEN(sBuffer, position) >= sBufferSize) {
       break;
     }
   }
