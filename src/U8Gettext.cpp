@@ -109,7 +109,6 @@ const char *u8gettextUN(const char *str)
   static char sBuffer[1024] = {0, };
   static const int sBufferSize = sizeof(sBuffer) - 1; // The last character must be '\0'
   char * position = NULL;
-  const U8GettextTranslation *translation = NULL;
 
   sBuffer[0] = '\0';
 
