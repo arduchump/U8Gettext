@@ -104,7 +104,7 @@ static char utf8ToU8GlibFontEncoding(const char *str)
   return '\0';
 }
 
-const char *u8gettextU(const char *str)
+const char *u8gettextUN(const char *str)
 {
   static char sBuffer[1024] = {0, };
   static const int sBufferSize = sizeof(sBuffer) - 1; // The last character must be '\0'
@@ -117,7 +117,6 @@ const char *u8gettextU(const char *str)
     return sBuffer;
   }
 
-  str = u8gettext(str);
   position = sBuffer;
 
   while(*str) {

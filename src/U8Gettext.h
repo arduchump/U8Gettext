@@ -70,13 +70,14 @@ const char *u8gettextGetLanguage();
 const char *u8gettext(const char *str);
 
 /**
- * Get translated message only for U8Glib display method !
+ * Convert message to encodings that U8Glib display method needs. It
+ * won't translate the input str before convert.
  *
  * @param str
  * @return Return string is a temporary pointer with about 1KB buffer!
- * @note Don't use the return pointer cross two U8GettextU()!
+ * @note Don't use the return pointer cross two U8GettextU*()!
  */
-const char *u8gettextU(const char *str);
+const char *u8gettextUN(const char *str);
 
 #endif // __U8GETTEXT_H_INCLUDED_4AD09038_006D_A018_36AB_D116C344B856
 
