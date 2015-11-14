@@ -14,11 +14,19 @@ sLanguageInstance = NULL;
 static const U8GettextContext *
 sContext = NULL;
 
+static char * sBuffer = NULL;
+static int16_t sBufferSize = 0; // The last character must be '\0'
+
 void _u8gettextInitialize(
     const U8GettextContext * context,
-    const char *language)
+    const char *language,
+    int16_t internalBufferSize)
 {
   sContext = context;
+  if (internalBufferSize > 0) {
+    sBuffer = (char * )malloc(internalBufferSize);
+    sBufferSize = internalBufferSize;
+  }
   u8gettextSetLanguage(language);
 }
 
@@ -106,8 +114,6 @@ static char utf8ToU8GlibFontEncoding(const char *str)
 
 const char *u8gettextUN(const char *str)
 {
-  static char sBuffer[1024] = {0, };
-  static const int sBufferSize = sizeof(sBuffer) - 1; // The last character must be '\0'
   char * position = NULL;
 
   sBuffer[0] = '\0';

@@ -44,10 +44,12 @@ extern const U8GettextContext __gU8GettextContext;
 
 void _u8gettextInitialize(
     const U8GettextContext * context,
-    const char *language);
-#define u8gettextInitialize(language) _u8gettextInitialize(\
+    const char *language,
+    int16_t internalBufferSize=256);
+#define u8gettextInitialize(language, internalBufferSize) _u8gettextInitialize(\
     &__gU8GettextContext, \
-    (language))
+    (language), \
+    (internalBufferSize))
 
 
 /**
