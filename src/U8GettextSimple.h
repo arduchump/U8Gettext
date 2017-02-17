@@ -10,8 +10,8 @@
 
 #include <U8Gettext.h>
 
-#define _(str) u8gettext((str))
+#define _(str) u8gettext(F(str))
 #define N_(str) (str)
-#define U_(str) u8gettextUN(u8gettext((str)))
+#define U_(str) u8gettextUN(u8gettext(F(str)))
 
 #endif /* __U8GETTEXTSIMPLE_H_INCLUDED_3DC4756E755911E5AA6EA088B4D1658C */

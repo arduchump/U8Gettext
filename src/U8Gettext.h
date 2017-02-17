@@ -10,6 +10,8 @@
 
 #define U8GETTEXT_VERSION U8GETTEXT_MAKE_VERSION(0, 0, 1)
 
+typedef class __FlashStringHelper U8GFChar;
+
 struct U8GettextCharMapping
 {
   uint32_t utf32Char;
@@ -18,8 +20,8 @@ struct U8GettextCharMapping
 
 struct U8GettextTranslation
 {
-  const char * msgId;
-  const char * msgStr;
+  const U8GFChar * msgId;
+  const U8GFChar * msgStr;
 };
 
 struct U8GettextLanguage
@@ -69,7 +71,7 @@ const char *u8gettextSetLanguage(const char *language);
  * not set language before.
  */
 const char *u8gettextGetLanguage();
-const char *u8gettext(const char *str);
+const U8GFChar *u8gettext(const U8GFChar *str);
 
 /**
  * Convert message to encodings that U8Glib display method needs. It
@@ -79,7 +81,7 @@ const char *u8gettext(const char *str);
  * @return Return string is a temporary pointer with about 1KB buffer!
  * @note Don't use the return pointer cross two U8GettextU*()!
  */
-const char *u8gettextUN(const char *str);
+const char *u8gettextUN(const U8GFChar *str);
 
 #endif // __U8GETTEXT_H_INCLUDED_4AD09038_006D_A018_36AB_D116C344B856
 

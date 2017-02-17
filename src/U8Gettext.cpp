@@ -17,6 +17,33 @@ sContext = NULL;
 static char * sBuffer = NULL;
 static int16_t sBufferSize = 0; // The last character must be '\0'
 
+/**
+ * @brief flashStrcmp
+ *
+ * Compare two string in flash
+ *
+ * @param s1
+ * @param s2
+ */
+static int flashStrcmp(const U8GFChar * s1, const U8GFChar * s2)
+{
+  if(s1 == s2)
+  {
+    return 0;
+  }
+
+  for(; pgm_read_byte_far(s1) == pgm_read_byte_far(s2);
+      s1 = (const U8GFChar *)((char *)s1 + 1),
+      s2 = (const U8GFChar *)((char *)s2 + 1)) {
+      if('\0' == pgm_read_byte_far(s1)) {
+          return 0;
+      }
+  }
+
+  return (((unsigned char)pgm_read_byte_far(s1) <
+           (unsigned char)pgm_read_byte_far(s2)) ? -1 : +1);
+}
+
 void _u8gettextInitialize(
     const U8GettextContext * context,
     const char *language,
@@ -72,20 +99,23 @@ const char *u8gettextGetLanguage()
   return "";
 }
 
-const char *u8gettext(const char *str)
+const U8GFChar *u8gettext(const U8GFChar *str)
 {
   uint16_t i = 0;
-  const U8GettextTranslation *translation = NULL;
+  U8GettextTranslation translation;
 
   if (!sLanguageInstance) {
     return str;
   }
 
-  translation = sLanguageInstance->translations;
-  for(i = 0; i < *sLanguageInstance->translationCount; ++i, ++translation) {
+  for(i = 0; i < *sLanguageInstance->translationCount; ++i) {
+    memcpy_P(&translation,
+             sLanguageInstance->translations + i,
+             sizeof(U8GettextTranslation));
+
     // Slowest way to find translation
-    if(0 == strcmp(str, translation->msgId)) {
-      return translation->msgStr;
+    if(0 == flashStrcmp(str, translation.msgId)) {
+      return translation.msgStr;
     }
   }
 
@@ -93,7 +123,7 @@ const char *u8gettext(const char *str)
   return str;
 }
 
-static char utf8ToU8GlibFontEncoding(const char *str)
+static char utf8ToU8GlibFontEncoding(const U8GFChar *str)
 {
   size_t i;
   uint32_t utf32Char;
@@ -112,7 +142,7 @@ static char utf8ToU8GlibFontEncoding(const char *str)
   return '\0';
 }
 
-const char *u8gettextUN(const char *str)
+const char *u8gettextUN(const U8GFChar *str)
 {
   char * position = NULL;
 
@@ -124,7 +154,7 @@ const char *u8gettextUN(const char *str)
 
   position = sBuffer;
 
-  while(*str) {
+  while(pgm_read_byte_far(str)) {
     *position = utf8ToU8GlibFontEncoding(str);
     str = utf8FindNextChar(str);
     ++ position;
