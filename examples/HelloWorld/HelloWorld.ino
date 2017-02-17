@@ -16,7 +16,7 @@ void printHexString(const char *str) {
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  u8gettextInitialize("en_US");
+  u8gettextInitialize("en_US", 256);
 }
 
 void loop() {
@@ -49,4 +49,10 @@ void loop() {
   Serial.println("[Test 3]");
 
   printHexString(U_("Hello, world!"));
+
+  Serial.println("[Test END]");
+
+  while(1) {
+    delay(1000);
+  }
 }
