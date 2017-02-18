@@ -81,7 +81,8 @@ const U8GFChar *u8gettext(const U8GFChar *str);
  * @return Return string is a temporary pointer with about 1KB buffer!
  * @note Don't use the return pointer cross two U8GettextU*()!
  */
-const char *u8gettextUN(const U8GFChar *str);
+const char *u8gettextUN(const char *str);
+const char *u8gettextUNF(const U8GFChar *str);
 
 #endif // __U8GETTEXT_H_INCLUDED_4AD09038_006D_A018_36AB_D116C344B856
 

@@ -123,7 +123,7 @@ const U8GFChar *u8gettext(const U8GFChar *str)
   return str;
 }
 
-static char utf8ToU8GlibFontEncoding(const U8GFChar *str)
+static char utf8ToU8GlibFontEncoding(const char *str)
 {
   size_t i;
   uint32_t utf32Char;
@@ -142,7 +142,53 @@ static char utf8ToU8GlibFontEncoding(const U8GFChar *str)
   return '\0';
 }
 
-const char *u8gettextUN(const U8GFChar *str)
+static char utf8ToU8GlibFontEncodingF(const U8GFChar *str)
+{
+  size_t i;
+  uint32_t utf32Char;
+  U8GettextCharMapping charMapping;
+
+  utf32Char = utf8ToUtf32(str);
+
+  // Slowest way to translate string to U8Glib font encoding
+  for(i = 0; i < *sContext->charMappingCount; ++ i) {
+    memcpy_P(&charMapping, sContext->charMappings + i, sizeof(charMapping));
+    if (charMapping.utf32Char == utf32Char) {
+      return charMapping.u8gChar;
+    }
+  }
+
+  return '\0';
+}
+
+
+const char *u8gettextUN(const char *str)
+{
+  char * position = NULL;
+
+  sBuffer[0] = '\0';
+
+  if (!sContext) {
+    return sBuffer;
+  }
+
+  position = sBuffer;
+
+  while(*str) {
+    *position = utf8ToU8GlibFontEncoding(str);
+    str = utf8FindNextChar(str);
+    ++ position;
+    if(PTR_OFFSET_BETWEEN(sBuffer, position) >= sBufferSize) {
+      break;
+    }
+  }
+
+  *position = '\0';
+
+  return sBuffer;
+}
+
+const char *u8gettextUNF(const U8GFChar *str)
 {
   char * position = NULL;
 
@@ -155,7 +201,7 @@ const char *u8gettextUN(const U8GFChar *str)
   position = sBuffer;
 
   while(pgm_read_byte_far(str)) {
-    *position = utf8ToU8GlibFontEncoding(str);
+    *position = utf8ToU8GlibFontEncodingF(str);
     str = utf8FindNextChar(str);
     ++ position;
     if(PTR_OFFSET_BETWEEN(sBuffer, position) >= sBufferSize) {
